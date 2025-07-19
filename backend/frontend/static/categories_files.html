@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manual Files</title>
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0d47a1, #bbdefb);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      flex: 1;
+    }
+
+    h1 {
+      color: #00008B;
+      background-color: #F0FFFF;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 40px;
+    }
+
+    .manual-link {
+      background-color: #ffffff;
+      color: #00008B;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .manual-link:hover {
+      background-color: #e3f2fd;
+      transform: scale(1.02);
+    }
+
+    .back-btn {
+      margin: 20px 0;
+    }
+
+    footer {
+      background-color: #f8f9fa;
+      color: #333;
+      text-align: center;
+      padding: 15px 0;
+      border-top: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container text-center">
+    <h1>Manual Files</h1>
+
+    <a href="categories.html" class="btn btn-outline-light back-btn">&larr; Back to Categories</a>
+
+    <ul class="list-unstyled" id="manualList"></ul>
+  </div>
+
+  <footer>
+    <p class="mb-0">&copy; 2025 NHPC Ltd. All rights reserved.</p>
+  </footer>
+
+  <script>
+    $(document).ready(function () {
+      const params = new URLSearchParams(window.location.search);
+      const categoryId = params.get('id');
+
+      $.get(`http://localhost:3001/api/category/${categoryId}/manuals`, function (data) {
+        data.forEach(manual => {
+          $('#manualList').append(`
+            <li class="manual-link">
+              <a href="http://localhost:3001${manual.file_location}" target="_blank" download>
+                ${manual.file_name}
+              </a>
+            </li>
+          `);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

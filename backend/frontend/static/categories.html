@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NHPC Manual Categories</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0d47a1, #e3f2fd);
+      padding-top: 100px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #F0FFFF;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 999;
+      padding: 15px 30px;
+    }
+
+    .logo-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-title img {
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #00008B;
+      font-weight: bold;
+    }
+
+    .search-box {
+      margin-top: 30px;
+    }
+
+    .search-box input {
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .category-card {
+      transition: transform 0.2s ease;
+    }
+
+    .category-card:hover {
+      transform: scale(1.02);
+      background-color: #e6f0ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with logo and title -->
+  <div class="header">
+    <div class="logo-title">
+      <img src="logo.png" alt="NHPC Logo">
+      <h1>NHPC Manual Categories</h1>
+    </div>
+  </div>
+
+  <!-- Main container -->
+  <div class="container text-center">
+    <div class="row justify-content-center search-box">
+      <div class="col-md-6">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search categories...">
+      </div>
+    </div>
+
+    <ul class="list-group mt-4" id="categoryList"></ul>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $.get("http://localhost:3001/api/categories", function (data) {
+        data.forEach(function (category) {
+          let href = `categories_files.html?id=${category.id}`;
+          $('#categoryList').append(`<li class="list-group-item category-card"><a href="${href}" class="text-decoration-none text-dark fw-bold">${category.name}</a></li>`);
+        });
+      });
+
+      $('#searchInput').on('keyup', function () {
+        var value = $(this).val().toLowerCase();
+        $("#categoryList li").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+  <footer class="text-center mt-5 py-3" style="background-color: #F0FFFF; color: #333; border-top: 1px solid #ccc;">
+  <p class="mb-0">&copy; 2025 NHPC Ltd. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
