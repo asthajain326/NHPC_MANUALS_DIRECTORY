@@ -19,7 +19,7 @@ goal of digital transformation within NHPC.
 
 
 **Implementation**
- *Interface Previews*
+ *(Interface Previews)*
 MANUALS CATEGORIES
 This page interface represents the main category selection page of the NHPC Manuals Directory 
 system. Allows users to browse manuals by various categories such as Electrical, Mechanical etc. 
